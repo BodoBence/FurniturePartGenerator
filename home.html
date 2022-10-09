@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Furniture Part Generator</title>
+</head>
+<body>
+    <label for="templates_id">Choose a template</label>
+
+    <select name="tmeplates" id="templates_id">
+      <option value="cupboard">Cupboard</option>
+    </select>
+    <br>
+
+    <label for="boadr_height_id">Board height</label>
+    <input class="parameter" type="number" id="board_height_id" name="boar_height" value="1" min="0">
+    <br>
+
+    <label for="measurements_width_id">Width</label>
+    <input class="parameter" type="number" id="measurements_width_id" name="width" value="100" min="1">
+    <br>
+
+    <label for="measurements_height_id">Height</label>
+    <input class="parameter" type="number" id="measurements_height_id" name="height" value="100" min="1">
+    <br>
+
+    <label for="measurements_depth_id">Depth</label>
+    <input class="parameter" type="number" id="measurements_depth_id" name="depth" value="100" min="1">
+    <br>
+
+    <label for="n_shelves_id">Number of shelves</label>
+    <input class="parameter" type="number" id="n_shelves_id" name="depth" value="2" min="0" max="10">
+    <br>
+
+    <label for="options_doors">Doors</label>
+    <input class="parameter" type="checkbox" id="doors_id" name="doors" checked>
+    <br>
+
+    <h1>Parts</h1>
+    <ul id="boards_list_id">
+    </ul>
+
+
+    <script type="text/javascript" src="part_calculator.js"></script>
+
+</body>
+</html>
