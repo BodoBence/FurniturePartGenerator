@@ -76,7 +76,7 @@ function template_cupboard(total_width, total_height, total_depth, board_height,
 
     // Horizontal dividers
     let shelf = new Board(
-        x=(total_width-3*board_height)/2,
+        x=(total_width-n_vertical_dividers*board_height)/(n_vertical_dividers-1),
         y=total_depth-board_height,
         z=board_height,
         n=n_horizontal_dividers,
@@ -86,7 +86,7 @@ function template_cupboard(total_width, total_height, total_depth, board_height,
 
     // Dooors
     let door = new Board(
-        x=total_width/2,
+        x=total_width/(n_vertical_dividers-1),
         y=total_height,
         z=board_height,
         n=n_vertical_dividers-1,
