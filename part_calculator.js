@@ -49,12 +49,14 @@ function template_cupboard(total_width, total_height, total_depth, board_height,
     
     // Vertical divisions
     for (let v_i = 0; v_i < n_vertical_divisions+2; v_i++) { // we must have 2 side boards always
+        console.log(v_i)
         let vertical_board = new Board(height=board_height, width=total_height-2*board_height, depth=total_depth, allocation='side '+ (v_i + 1))
         board_elements.push(vertical_board)
     }
 
     // Horizonral division (Shelves)
     for (let h_i = 0; h_i < n_horizontal_divisions; h_i++) {
+        console.log(h_i)
         let board_shelf = new Board(board_height, total_width, total_depth, 'shelf '+ (h_i + 1))
         board_elements.push(board_shelf)
     }
@@ -76,9 +78,16 @@ function list_board_elements(destination, board_elements){
 
     // Create new elements
     board_elements.forEach(e => {
-        console.log(e.allocation)
-        var node = document.createElement('li');
-        node.appendChild(document.createTextNode(e.allocation+' '+e.height+' '+e.width+' '+e.depth));
-        destination.appendChild(node);
+        let board_element = create_element_with_text(destination ,e.allocation, 'li')
+        create_element_with_text(board_element ,e.width, 'p')
+        create_element_with_text(board_element ,e.height, 'p')
+        create_element_with_text(board_element ,e.depth, 'p')
     });
+
+    function create_element_with_text(node_destination, node_text, element_type){
+        let node = document.createElement(element_type);
+        node.appendChild(document.createTextNode(node_text));
+        node_destination.appendChild(node);
+        return node
+    }
 }
