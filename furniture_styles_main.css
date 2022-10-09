@@ -1,0 +1,25 @@
+h1 {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+#boards_list_id {
+    display: grid;
+    grid-template-rows: auto auto auto auto;
+}
+
+
+#boards_list_id li {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#boards_list_id li :first-child {
+    grid-column: 1/-1;
+}
+
+#boards_list_id li p {
+    text-align: center
+    width: 100%;
+}
