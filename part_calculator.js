@@ -49,7 +49,7 @@ function template_cupboard(total_width, total_height, total_depth, board_height,
     
     // Vertical divisions
     for (let i = 0; i < n_vertical_divisions+2; i++) { // we must have 2 side boards always
-        let vertical_board = new Board(height=board_height, width=total_height-2*board_height, depth=total_depth, allocation='shelf '+ (i + 1))
+        let vertical_board = new Board(height=board_height, width=total_height-2*board_height, depth=total_depth, allocation='side '+ (i + 1))
         board_elements.push(vertical_board)
     }
 
