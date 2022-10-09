@@ -1,12 +1,15 @@
 // Class definitions
 class Board {
-    constructor(height, width, depth, allocation) {
-      this.height = height;
-      this.width = width;
-      this.depth = depth;
+    constructor(x, y, z, n, allocation) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+      this.n = n;
       this.allocation = allocation
     }
 }
+
+var measurement_unit = ' mm'
 
 // Start
 window.onload = list_board_elements(destination=document.getElementById('boards_list_id'), 
@@ -15,8 +18,8 @@ window.onload = list_board_elements(destination=document.getElementById('boards_
             total_height=document.getElementById('measurements_height_id').value, 
             total_depth=document.getElementById('measurements_depth_id').value, 
             board_height=document.getElementById('board_height_id').value,
-            n_horizontal_divisions=document.getElementById('n_horizontal_divisions_id').value,
-            n_vertical_divisions=document.getElementById('n_vertical_divisions_id').value
+            n_horizontal_dividers=document.getElementById('n_horizontal_dividers_id').value,
+            n_vertical_dividers=document.getElementById('n_vertical_dividers_id').value
 
 )));
 // Interaction triggered update
@@ -29,43 +32,67 @@ for (let i = 0; i < parameters.length; i++) {
             total_height=document.getElementById('measurements_height_id').value, 
             total_depth=document.getElementById('measurements_depth_id').value, 
             board_height=document.getElementById('board_height_id').value,
-            n_horizontal_divisions=document.getElementById('n_horizontal_divisions_id').value,
-            n_vertical_divisions=document.getElementById('n_vertical_divisions_id').value
+            n_horizontal_dividers=document.getElementById('n_horizontal_dividers_id').value,
+            n_vertical_dividers=document.getElementById('n_vertical_dividers_id').value
             ))
         )
     })
 }
 
 // Functions
-function template_cupboard(total_width, total_height, total_depth, board_height, n_horizontal_divisions, n_vertical_divisions) {
+function template_cupboard(total_width, total_height, total_depth, board_height, n_horizontal_dividers, n_vertical_dividers) {
     let board_elements = []
 
     // Top and bottom 
-    let board_top = new Board(board_height, total_width, total_depth, 'top')
-    board_elements.push(board_top)
-
-    let board_bottom = new Board(board_height, total_width, total_depth, 'bottom')
-    board_elements.push(board_bottom)
+    let top_bottom = new Board(
+        x=total_width, 
+        y=total_depth-board_height, 
+        z=board_height,
+        n=2, 
+        allocation='top/bottom'
+        )
+    board_elements.push(top_bottom)
     
     // Vertical divisions
-    for (let v_i = 0; v_i < n_vertical_divisions+2; v_i++) { // we must have 2 side boards always
-        console.log(v_i)
-        let vertical_board = new Board(height=board_height, width=total_height-2*board_height, depth=total_depth, allocation='side '+ (v_i + 1))
-        board_elements.push(vertical_board)
-    }
-
-    // Horizonral division (Shelves)
-    for (let h_i = 0; h_i < n_horizontal_divisions; h_i++) {
-        console.log(h_i)
-        let board_shelf = new Board(board_height, total_width, total_depth, 'shelf '+ (h_i + 1))
-        board_elements.push(board_shelf)
-    }
+    let vertical = new Board(
+        x=total_height-2*board_height,
+        y=total_depth-board_height,
+        z=board_height,
+        n=n_vertical_dividers,
+        allocation='side/vertical divider'
+        )
+    board_elements.push(vertical)
 
     // Back
-    let board_back = new Board(board_height, total_width+2*board_height, total_depth+2*board_height, 'back')
-    board_elements.push(board_back)
+    let back = new Board(
+        x=total_width,
+        y=total_height,
+        z=board_height,
+        n=1,
+        allocation='back'
+        )
+    board_elements.push(back)
+
+
+    // Horizontal dividers
+    let shelf = new Board(
+        x=(total_width-3*board_height)/2,
+        y=total_depth-board_height,
+        z=board_height,
+        n=n_horizontal_dividers,
+        allocation='shelf'
+        )
+    board_elements.push(shelf)
 
     // Dooors
+    let door = new Board(
+        x=total_width/2,
+        y=total_height,
+        z=board_height,
+        n=n_vertical_dividers-1,
+        allocation='door'
+        )
+    board_elements.push(door)
 
     return board_elements
 }
@@ -79,9 +106,10 @@ function list_board_elements(destination, board_elements){
     // Create new elements
     board_elements.forEach(e => {
         let board_element = create_element_with_text(destination ,e.allocation, 'li')
-        create_element_with_text(board_element ,e.width, 'p')
-        create_element_with_text(board_element ,e.height, 'p')
-        create_element_with_text(board_element ,e.depth, 'p')
+        create_element_with_text(board_element ,'x ' + e.x + measurement_unit, 'p')
+        create_element_with_text(board_element ,'y ' + e.y + measurement_unit, 'p')
+        create_element_with_text(board_element ,'z ' + e.z + measurement_unit, 'p')
+        create_element_with_text(board_element ,'number ' + e.n + 'pcs', 'p')
     });
 
     function create_element_with_text(node_destination, node_text, element_type){
